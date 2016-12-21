@@ -1,5 +1,6 @@
 var myApp = angular.module('myApp',
-    ['ngRoute', 'firebase']);
+    ['ngRoute', 'firebase'])
+    .constant('FIREBASE_URL', 'https://registerapp-bb5ea.firebaseio.com');
 
 myApp.config(['$routeProvider', function($routeProvider) {
     $routeProvider.

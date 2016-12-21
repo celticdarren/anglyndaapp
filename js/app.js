@@ -2,6 +2,15 @@ var myApp = angular.module('myApp',
     ['ngRoute', 'firebase'])
     .constant('FIREBASE_URL', 'https://registerapp-bb5ea.firebaseio.com');
 
+myApp.run(['$rootScope', '$location', function($rootScope, $location) {
+    $rootScope.$on('$routeChangeError', function(event, next, previous, error) {
+        if(error == 'AUTH_REQUIRED') {
+            $rootScope.message = 'Sorry, must log in to access that page';
+            $location.path('/login');
+        }
+    });
+}]);
+
 myApp.config(['$routeProvider', function($routeProvider) {
     $routeProvider.
     when('/login', {
@@ -14,7 +23,12 @@ myApp.config(['$routeProvider', function($routeProvider) {
     }).
     when('/success', {
         templateUrl: 'views/success.html',
-        controller: 'RegistrationController'
+        controller: 'RegistrationController',
+        resolve: {
+            currentAuthentication: function(Authentication) {
+                return Authentication.requireAuth();
+            } // current Auth
+        } // resolve
     }).
     otherwise({
         redirectTo: '/login'

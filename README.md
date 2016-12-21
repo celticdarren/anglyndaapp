@@ -1,2 +1,2 @@
 # anglyndaapp
-Angular Register app on lynda.com
+Angular Register app on lynda.comgit
